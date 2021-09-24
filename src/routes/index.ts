@@ -1,8 +1,9 @@
 import { Router } from 'express';
+import usersRouter from '@modules/users/routes/users.routes';
 
 const routes = Router();
 
-routes.get('/hello', (request, response) => response.json({message: 'olá mundo'}));
-routes.post('/hello', (request, response) => response.json({message: `olá ${request.body.name}`}));
+routes.use('/users', usersRouter);
+
 
 export default routes;
