@@ -7,8 +7,7 @@ const plague = new Schema({
     },
     name : {
         type : String,
-        required : true,
-        unique : true
+        required : true
     },
     photo : {
         type : String,
@@ -21,7 +20,6 @@ const plague = new Schema({
     farmId : {
         type: String,
         required: true,
-        unique: true,
         ref: 'Farm',
     }
 },{
