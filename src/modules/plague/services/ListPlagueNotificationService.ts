@@ -1,7 +1,7 @@
 import FarmController from '@modules/farm/controllers/FarmController';
 import Farm from '@modules/farm/schemas/Farm';
 import Plague from '../schemas/Plague';
-import PlagueNotification from '../schemas/plagueNotification';
+import PlagueNotification from '../schemas/PlagueNotification';
 
 class ListPlagueNotificationService {
 
