@@ -1,7 +1,5 @@
 import { Schema, Document, Model, model } from "mongoose";
 import bcryptjs from 'bcryptjs';
-import mongoose from "@shared/database";
-
 interface IUserCredentialInterface {
     _id: string;
     userId: string;

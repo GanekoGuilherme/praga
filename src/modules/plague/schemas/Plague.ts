@@ -1,5 +1,12 @@
-import mongoose from "@shared/database";
-import { Schema } from "mongoose";
+import { Schema, Document, Model, model } from "mongoose";
+
+interface IPlagueInterface {
+    _id: string;
+    name: string;
+    photo?: string;
+    active: boolean;
+    farmId: string;
+  }
 
 const plague = new Schema({
     _id : {
@@ -28,6 +35,10 @@ const plague = new Schema({
     versionKey: false,
 },);
 
-const Plague = mongoose.model("Plague", plague);
+type PlagueDocument = Document & IPlagueInterface;
+
+type PlagueModel = Model<PlagueDocument>;
+
+const Plague = model<PlagueDocument, PlagueModel>("Plague", plague);
 
 export default Plague;
