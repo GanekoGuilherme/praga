@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import CreatePlagueService from '../services/CreatePlagueService';
 import ListPlagueService from '../services/ListPlagueService';
 import ListPlagueStateService from '../services/ListPlagueStateService';
+import ListPlagueWithFilterService from '../services/ListPlagueWithFilterService';
 import UpdatePlagueService from '../services/UpdatePlagueService';
 
 class PlagueController {
@@ -45,6 +46,18 @@ class PlagueController {
         
         return response.status(200).json({msg: `Praga atualizado com sucesso.`})
     }
+
+    public async listByStateWithFilter(request: Request, response: Response): Promise<Response> {
+        const { state } = request.params;
+        const { plagues, dateBegin, dateEnd } = request.body;
+
+        const listPlagueWithFilterService = new ListPlagueWithFilterService();
+
+        const listPlague = await listPlagueWithFilterService.execute({ state, plagues, dateBegin, dateEnd });
+
+        return response.status(200).json({items: listPlague});
+    }
+    
 }
 
 export default PlagueController;
