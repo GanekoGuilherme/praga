@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 
 import Farm from '@modules/farm/schemas/Farm';
-import PlagueNotification from '../schemas/plagueNotification';
+import PlagueNotification from '../schemas/PlagueNotification';
 
 interface IRequestDTO {
     message: string;
