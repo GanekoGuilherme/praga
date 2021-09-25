@@ -8,7 +8,7 @@ interface IRequestDTO {
   dateEnd: string;
 }
 
-class ListPlagueWithFilterService {
+class ListPlagueStateWithFilterService {
 
     public async execute({ state, plagues, dateBegin, dateEnd }: IRequestDTO ): Promise<any>{
       const farmsList = await Farm.find({ state }).select('_id position.lat position.long position.radius');      
@@ -28,4 +28,4 @@ class ListPlagueWithFilterService {
     }
 }
 
-export default ListPlagueWithFilterService;
+export default ListPlagueStateWithFilterService;

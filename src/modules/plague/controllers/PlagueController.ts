@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import CreatePlagueService from '../services/CreatePlagueService';
 import ListPlagueService from '../services/ListPlagueService';
 import ListPlagueStateService from '../services/ListPlagueStateService';
-import ListPlagueWithFilterService from '../services/ListPlagueWithFilterService';
+import ListPlagueStateWithFilterService from '../services/ListPlagueStateWithFilterService';
 import UpdatePlagueService from '../services/UpdatePlagueService';
 
 class PlagueController {
@@ -51,13 +51,25 @@ class PlagueController {
         const { state } = request.params;
         const { plagues, dateBegin, dateEnd } = request.body;
 
-        const listPlagueWithFilterService = new ListPlagueWithFilterService();
+        const listPlagueStateWithFilterService = new ListPlagueStateWithFilterService();
 
-        const listPlague = await listPlagueWithFilterService.execute({ state, plagues, dateBegin, dateEnd });
+        const listPlague = await listPlagueStateWithFilterService.execute({ state, plagues, dateBegin, dateEnd });
 
-        return response.status(200).json({items: listPlague});
+        return response.status(200).json({ items: listPlague });
+    }
+
+    public async listWithFilter(request: Request, response: Response): Promise<Response> {
+        const { state } = request.params;
+        const { plagues, dateBegin, dateEnd } = request.body;
+
+        const listPlagueStateWithFilterService = new ListPlagueStateWithFilterService();
+
+        const listPlague = await listPlagueStateWithFilterService.execute({ state, plagues, dateBegin, dateEnd });
+
+        return response.status(200).json({ items: listPlague });
     }
     
 }
 
 export default PlagueController;
+
