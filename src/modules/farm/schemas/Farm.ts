@@ -15,12 +15,40 @@ const farm = new Schema({
       unique: true,
       ref: 'User',
     },
-    addressId : {
+    street : {
+        type : String
+    },
+    district : {
+      type: String,
+    }, 
+    city : {
         type: String,
-        required: true,
-        unique: true,
-        ref: 'Address',
-    }
+    },
+    state: {
+      type : String,
+      required : true
+    },
+    cep : {
+      type : String,
+      required : true,
+    },
+    nirf : {
+      type : String,
+      required : true
+    },
+    position : {
+      lat : {
+        type : Number,
+        required : true,
+      },
+      long : {
+        type : Number,
+        required : true,
+      },
+      radius : {
+        type : Number,
+        required : true
+      }}
 },{
     timestamps: true,
     autoCreate: true,
