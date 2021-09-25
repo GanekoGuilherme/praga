@@ -7,4 +7,8 @@ const usersRouter = Router();
 
 usersRouter.post('/register', userController.store);
 
+usersRouter.put('/update/user/:userId', userController.updateUser);
+
+usersRouter.put('/update/credentials/:userId', userController.updateUserCredentials);
+
 export default usersRouter;
