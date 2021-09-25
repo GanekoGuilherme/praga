@@ -1,5 +1,21 @@
-import mongoose from "@shared/database";
-import { Schema } from "mongoose";
+import { Schema, Document, Model, model } from "mongoose";
+
+interface IFarmInterface {
+  _id: string;
+  name: string;
+  userId: string;
+  street: string;
+  district: string;
+  city: string;
+  state: string;
+  cep: string;
+  nirf: string;
+  position: {
+    lat: Number;
+    long: Number;
+    radius: Number
+  }
+}
 
 const farm = new Schema({
     _id : {
@@ -54,6 +70,10 @@ const farm = new Schema({
     versionKey: false,
 },);
 
-const Farm = mongoose.model("Farm", farm);
+type FarmDocument = Document & IFarmInterface;
+
+type FarmModel = Model<FarmDocument>;
+
+const Farm = model<FarmDocument, FarmModel>("Farm", farm);
 
 export default Farm;
