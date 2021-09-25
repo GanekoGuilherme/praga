@@ -21,9 +21,7 @@ interface IRequestDTO {
 class CreateFarmService {
 
     public async execute({ name, userId, street, district, city, state, cep, nirf, position } : IRequestDTO): Promise<any>{
-        console.log(name, userId)
         const farm = await Farm.create({ _id: uuidv4(), name, userId, street, district, city, state, cep, nirf, position});
-        console.log(farm)
         
         return farm;
     }

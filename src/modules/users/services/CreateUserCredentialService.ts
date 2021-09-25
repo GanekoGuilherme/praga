@@ -13,7 +13,6 @@ interface IRequestDTO {
 class CreateUserCredentialService {
 
     public async execute({ email, password, userId, session } : IRequestDTO): Promise<any>{
-        console.log(userId);
         const user = await UserCredential.create([{ _id: uuidv4(), email, password, userId }], { session });
         
         return user[0];
