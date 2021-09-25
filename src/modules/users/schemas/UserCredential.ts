@@ -1,6 +1,13 @@
-import { Schema } from "mongoose";
+import { Schema, Document, Model, model } from "mongoose";
 import bcryptjs from 'bcryptjs';
 import mongoose from "@shared/database";
+
+interface IUserCredentialInterface {
+    _id: string;
+    userId: string;
+    email: string;
+    password: string;
+}
 
 const userCredential = new Schema(
     {
@@ -36,6 +43,10 @@ userCredential.pre('save', async function (next) {
     next();  
 });
 
-const UserCredential = mongoose.model("UserCredential", userCredential);
+type UserCredentialDocument = Document & IUserCredentialInterface;
+
+type UserCredentialModel = Model<UserCredentialDocument>;
+
+const UserCredential = model<UserCredentialDocument,UserCredentialModel>("UserCredential", userCredential);
 
 export default UserCredential;
