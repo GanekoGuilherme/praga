@@ -7,4 +7,6 @@ const farmRouter = Router();
 
 farmRouter.post('/register', farmController.store);
 
+farmRouter.get('/list/:userId', farmController.list);
+
 export default farmRouter;
