@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import CreateFarmService from '../services/CreateFarmService';
+import ListFarmService from '../services/ListFarmService';
 import UpdateFarmService from '../services/UpdateFarmService';
 
 class FarmController {
@@ -14,6 +15,16 @@ class FarmController {
         return response.status(200).json({msg: `Fazenda ${farm.name} cadastrada com sucesso.`, farm : farm._id });
     }
 
+    public async list(request: Request, response: Response): Promise<Response> {
+        const {userId} = request.params;
+        
+        const listFarmService = new ListFarmService();
+
+        const listFarm = await listFarmService.execute({ userId });
+        
+        return response.status(200).json({items: listFarm });
+    }
+    
     public async update(request: Request, response: Response): Promise<Response> {
         const {name, street, district, city, state, cep, nirf, position} = request.body;
         const {farmId} = request.params
