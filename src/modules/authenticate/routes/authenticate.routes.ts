@@ -7,4 +7,6 @@ const authenticateRouter = Router();
 
 authenticateRouter.post('/', authenticateController.auth);
 
+authenticateRouter.post('/resetPassword', authenticateController.resetPassword);
+
 export default authenticateRouter;
