@@ -12,7 +12,6 @@ const farm = new Schema({
     userId : {
       type: String,
       required: true,
-      unique: true,
       ref: 'User',
     },
     street : {
