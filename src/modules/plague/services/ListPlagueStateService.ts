@@ -1,12 +1,13 @@
+import Farm from '@modules/farm/schemas/Farm';
 import Plague from '../schemas/Plague';
 
 class ListPlagueStateService {
 
     public async execute(state): Promise<any>{
-      console.log(state)  
-      const plagueList = await Plague.find({state : state}).populate({path: "farmId",model: "Farm"});
+      const farmsList = await Farm.find(state).select('_id');
+      const plagueList = await Plague.find({farmId: {$in:farmsList}});
         
-        return plagueList;
+      return plagueList;
     }
 }
 
