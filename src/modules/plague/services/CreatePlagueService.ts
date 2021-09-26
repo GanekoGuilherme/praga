@@ -6,12 +6,13 @@ interface IRequestDTO {
     name: string;
     active: boolean;
     farmId: string;
+    photo: string;
 }
 
 class CreatePlaguelService {
 
-    public async execute({ name, active, farmId } : IRequestDTO): Promise<any>{
-        const plague = await Plague.create({ _id: uuidv4(), name, active, farmId});
+    public async execute({ name, photo, active, farmId } : IRequestDTO): Promise<any>{
+        const plague = await Plague.create({ _id: uuidv4(), name, photo, active, farmId});
         
         return plague;
     }

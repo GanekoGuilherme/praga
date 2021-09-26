@@ -12,7 +12,7 @@ import SavePlagueImagesService from '../services/SavePlagueImagesService';
 class PlagueController {
 
     public async store(request: Request, response: Response): Promise<Response> {
-        const {name, active, farmId} = request.body;
+        const {name, photo, active, farmId} = request.body;
         const requestImages = request.files as Express.Multer.File[];
         
         const images = requestImages?.map(image=>{
@@ -21,7 +21,7 @@ class PlagueController {
         
         const createPlagueService = new CreatePlagueService();
 
-        const plague = await createPlagueService.execute({ name, active, farmId});
+        const plague = await createPlagueService.execute({ name, photo, active, farmId});
 
         const savePlagueImagesService = new SavePlagueImagesService();
 
