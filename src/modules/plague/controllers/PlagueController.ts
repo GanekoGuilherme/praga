@@ -3,6 +3,7 @@ import CreatePlagueService from '../services/CreatePlagueService';
 import ListPlagueService from '../services/ListPlagueService';
 import ListPlagueStateService from '../services/ListPlagueStateService';
 import ListPlagueStateWithFilterService from '../services/ListPlagueStateWithFilterService';
+import ListPlagueWithFilterService from '../services/ListPlagueWithFilterService';
 import UpdatePlagueService from '../services/UpdatePlagueService';
 
 class PlagueController {
@@ -58,13 +59,12 @@ class PlagueController {
         return response.status(200).json({ items: listPlague });
     }
 
-    public async listWithFilter(request: Request, response: Response): Promise<Response> {
-        const { state } = request.params;
+    public async listWithFilter(request: Request, response: Response): Promise<Response> {        
         const { plagues, dateBegin, dateEnd } = request.body;
 
-        const listPlagueStateWithFilterService = new ListPlagueStateWithFilterService();
+        const listPlagueWithFilterService = new ListPlagueWithFilterService();
 
-        const listPlague = await listPlagueStateWithFilterService.execute({ state, plagues, dateBegin, dateEnd });
+        const listPlague = await listPlagueWithFilterService.execute({ plagues, dateBegin, dateEnd });
 
         return response.status(200).json({ items: listPlague });
     }
