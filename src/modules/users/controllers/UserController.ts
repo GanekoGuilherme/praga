@@ -5,6 +5,7 @@ import AuthenticateUserService from '@modules/authenticate/services/AuhenticateU
 import mongoose from '@shared/database';
 import UpdateUserService from '../services/UpdateUserService';
 import UpdateUserCredentialsService from '../services/UpdateUserCredentialsService';
+import AppError from '@shared/errors/AppError';
 
 class UserController {
 
@@ -28,6 +29,9 @@ class UserController {
             return response.status(200).json({ token, userId: user._id, name: user.name });
         } catch(error){
             await session.abortTransaction();
+
+            if( error instanceof AppError) throw error;
+            
             return response.status(500).json({msg: 'Falha no cadastro do usuário.'});
         } finally {
             session.endSession();
