@@ -1,3 +1,4 @@
+import { IFarmInterface } from "@modules/farm/schemas/Farm";
 import { Schema, Document, Model, model } from "mongoose";
 
 interface IPlagueInterface {
@@ -5,7 +6,7 @@ interface IPlagueInterface {
     name: string;
     photo?: string;
     active: boolean;
-    farmId: string;
+    farmId: IFarmInterface;
   }
 
 const plague = new Schema({

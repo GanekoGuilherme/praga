@@ -1,6 +1,6 @@
 import { Schema, Document, Model, model } from "mongoose";
 
-interface IFarmInterface {
+export interface IFarmInterface {
   _id: string;
   name: string;
   userId: string;
