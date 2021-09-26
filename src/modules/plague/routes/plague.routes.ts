@@ -24,4 +24,6 @@ plagueRouter.put('/update/:plagueId', ensureAuthenticate, plagueController.updat
 
 plagueRouter.get('/notification/:userId', ensureAuthenticate, plagueController.getNotification);
 
+plagueRouter.get('/listPlagues', plagueController.listPlagues);
+
 export default plagueRouter;
