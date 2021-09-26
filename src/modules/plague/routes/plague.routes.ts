@@ -26,4 +26,8 @@ plagueRouter.get('/notification/:userId', ensureAuthenticate, plagueController.g
 
 plagueRouter.get('/frontList', plagueController.frontList);
 
+plagueRouter.delete('/notification/:notificationId', ensureAuthenticate, plagueController.deleteNotification);
+
+plagueRouter.get('/listPlagues', plagueController.listPlagues);
+
 export default plagueRouter;

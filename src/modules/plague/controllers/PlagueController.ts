@@ -9,11 +9,13 @@ import UpdatePlagueService from '../services/UpdatePlagueService';
 import ListPlagueNotificationService from '../services/ListPlagueNotificationService';
 import SavePlagueImagesService from '../services/SavePlagueImagesService';
 import FrontListService from '../services/FronListService';
+import ListPlagueNameService from '../services/ListPlagueNameService';
+import DeletePlagueNotificationService from '../services/DeletePlagueNotificationService';
 
 class PlagueController {
 
     public async store(request: Request, response: Response): Promise<Response> {
-        const {name, active, farmId} = request.body;
+        const {name, photo, active, farmId} = request.body;
         const requestImages = request.files as Express.Multer.File[];
         
         const images = requestImages?.map(image=>{
@@ -22,7 +24,7 @@ class PlagueController {
         
         const createPlagueService = new CreatePlagueService();
 
-        const plague = await createPlagueService.execute({ name, active, farmId});
+        const plague = await createPlagueService.execute({ name, photo, active, farmId});
 
         const savePlagueImagesService = new SavePlagueImagesService();
 
@@ -104,6 +106,23 @@ class PlagueController {
         const frontListPlague = await frontListService.execute();
 
         return response.status(200).json({items: frontListPlague});
+    }
+    public async deleteNotification(request: Request, response: Response): Promise<Response> {
+        const {notificationId} = request.params;
+
+        const deletePlagueNotificationService = new DeletePlagueNotificationService();
+
+        await deletePlagueNotificationService.execute({notificationId});
+
+        return response.status(200).json({message: 'Notificação deleteda com sucesso.'});
+    }
+
+    public async listPlagues(request: Request, response: Response): Promise<Response>{
+        const listPlagueNameService = new ListPlagueNameService();
+
+        const listPlagueName = await listPlagueNameService.execute();
+
+        return response.status(200).json(listPlagueName);
     }
 }
 

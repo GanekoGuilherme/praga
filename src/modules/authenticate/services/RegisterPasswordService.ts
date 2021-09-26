@@ -32,21 +32,6 @@ class RegisterPasswordService {
 
     const user = await User.findById(userCredentials.userId);
 
-
-    // validações de senha
-    const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*?[0-9])[@!#$%^&*+\-.,;_:'~()/\\a-zA-Z\d]{8,16}$/;
-    if (password == null || password === undefined) {
-      throw new AppError('Senha Inválida!', 401);
-    }
-
-    if (!pattern.test(password)) {
-      throw new AppError('Senha Inválida!', 401);
-    }
-
-    if (password.length <= 7 || password.length >= 17) {
-      throw new AppError('Senha Inválida!', 401);
-    }
-
     // criptografando a senha para salvar no banco
     const hash = await bcryptjs.hash(password, 10);
     await UserCredential.findByIdAndUpdate(userCredentials._id, {

@@ -6,7 +6,7 @@ class ListPlagueStateService {
 
     public async execute(state): Promise<any>{
       const farmsList = await Farm.find(state).select('_id position.lat position.long position.radius');
-      const plagueList = await Plague.find({farmId: {$in:farmsList.map((id) => id._id)}}).select('-photo -createdAt -updatedAt');
+      const plagueList = await Plague.find({farmId: {$in:farmsList.map((id) => id._id)}}).select('-createdAt -updatedAt');
       
       const plagueListWithPosition = plagueList.map((plague) => {
         const resp = {
@@ -21,7 +21,11 @@ class ListPlagueStateService {
       const plagueAndPhotoList = [];
 
       for (let index = 0; index < plagueListWithPosition?.length; index += 1){
-        const photo = await PlagueImages.find({ plagueId: plagueListWithPosition[index]._id });
+        let photo = [];
+        if (plagueList[index]?.photo === 'sim') {
+            photo = await PlagueImages.find({ plagueId: plagueListWithPosition[index]._id });
+        }
+
         const item = {
             _id: plagueListWithPosition[index]._id,
             name: plagueListWithPosition[index].name,

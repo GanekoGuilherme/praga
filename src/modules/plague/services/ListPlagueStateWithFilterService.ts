@@ -13,7 +13,7 @@ class ListPlagueStateWithFilterService {
 
     public async execute({ state, plagues, dateBegin, dateEnd }: IRequestDTO ): Promise<any>{
       const farmsList = await Farm.find({ state }).select('_id position.lat position.long position.radius');      
-      const plagueList = await Plague.find({ farmId: { $in: farmsList.map((id) => id._id) }, name: { $in: plagues }, createdAt: { $gte: (dateBegin ? dateBegin : '0001-01-01'), $lt: (dateEnd ? dateEnd : '2100-01-01') } }).select('-photo -createdAt -updatedAt');
+      const plagueList = await Plague.find({ farmId: { $in: farmsList.map((id) => id._id) }, name: { $in: plagues }, createdAt: { $gte: (dateBegin ? dateBegin : '0001-01-01'), $lt: (dateEnd ? dateEnd : '2100-01-01') } }).select('-createdAt -updatedAt');
       
       const plagueListWithPosition = plagueList.map((plague) => {
         const resp = {
@@ -28,7 +28,10 @@ class ListPlagueStateWithFilterService {
       const plagueAndPhotoList = [];
 
       for (let index = 0; index < plagueListWithPosition?.length; index += 1){
-        const photo = await PlagueImages.find({ plagueId: plagueListWithPosition[index]._id });
+        let photo = [];
+        if (plagueList[index]?.photo === 'sim') {
+            photo = await PlagueImages.find({ plagueId: plagueListWithPosition[index]._id });
+        }
         const item = {
             _id: plagueListWithPosition[index]._id,
             name: plagueListWithPosition[index].name,
