@@ -5,6 +5,9 @@ interface IUserCredentialInterface {
     userId: string;
     email: string;
     password: string;
+    passwordToken?: string,
+    passwordTokenExpires?: Date,
+    passwordTokenActive?: boolean,
 }
 
 const userCredential = new Schema(
@@ -27,6 +30,15 @@ const userCredential = new Schema(
             type: String,
             required: true,
             select: false,
+        },
+        passwordToken: {
+            type: String
+        },
+        passwordTokenExpires: {
+            type: Date
+        },
+        passwordTokenActive: {
+            type: Boolean
         }
     }, {
         timestamps: true,

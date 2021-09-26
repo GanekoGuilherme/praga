@@ -9,4 +9,6 @@ authenticateRouter.post('/', authenticateController.auth);
 
 authenticateRouter.post('/resetPassword', authenticateController.resetPassword);
 
+authenticateRouter.post('/registerPassword/:tokenURL', authenticateController.registerPassword);
+
 export default authenticateRouter;

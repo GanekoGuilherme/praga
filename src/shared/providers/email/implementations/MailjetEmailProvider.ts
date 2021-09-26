@@ -1,8 +1,9 @@
 import mailjet from 'node-mailjet';
 
 class MaijetEmailProvider {
-    public async sendEmail(): Promise<void>{
+    public async sendEmail(email, name, token): Promise<void>{
         const conection = mailjet.connect('89eef36534b630648d7ac440e9b587d2', 'c3691c1abaca2e3d5b43df5a1917cd1f')
+        console.log(name.name)
         const request = conection.post("send", {'version': 'v3.1'})
             .request({
               "Messages":[
@@ -13,13 +14,12 @@ class MaijetEmailProvider {
                   },
                   "To": [
                     {
-                      "Email": "guilhermeganeko@hotmail.com",
-                      "Name": "Gui"
+                      "Email": email,
+                      "Name": name.name
                     }
                   ],
                   "Subject": "Recuperação de senha",
-                //   "TextPart": "My first Mailjet email",
-                  "HTMLPart": "<h3>Olá Lucas, <br><br>    Clique <a href='https://www.google.com/'>aqui</a> para iniciar a recuperação de sua senha!</h3><h5> Caso o link acima não funcionar, copie a URL (http:www.google.com.br) e cole no navegador.</h5>",
+                  "HTMLPart": `<h3>Olá ${name.name}, <br><br>    Clique <a href='https://agroradar.herokuapp.com/cadastro-senha/${token}'>aqui</a> para iniciar a recuperação de sua senha!</h3><h5> Caso o link acima não funcionar, copie a URL (https://agroradar.herokuapp.com/cadastro-senha/${token}) e cole no navegador.</h5>`,
                   "CustomID": "AppGettingStartedTest"
                 }
               ]
