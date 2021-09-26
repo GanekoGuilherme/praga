@@ -9,6 +9,7 @@ import UpdatePlagueService from '../services/UpdatePlagueService';
 import ListPlagueNotificationService from '../services/ListPlagueNotificationService';
 import SavePlagueImagesService from '../services/SavePlagueImagesService';
 import ListPlagueNameService from '../services/ListPlagueNameService';
+import DeletePlagueNotificationService from '../services/DeletePlagueNotificationService';
 
 class PlagueController {
 
@@ -96,6 +97,16 @@ class PlagueController {
         const listPlagueNotification = await listPlagueNotificationService.execute({userId});
 
         return response.status(200).json({items: listPlagueNotification});
+    }
+
+    public async deleteNotification(request: Request, response: Response): Promise<Response> {
+        const {notificationId} = request.params;
+
+        const deletePlagueNotificationService = new DeletePlagueNotificationService();
+
+        await deletePlagueNotificationService.execute({notificationId});
+
+        return response.status(200).json({message: 'Notificação deleteda com sucesso.'});
     }
 
     public async listPlagues(request: Request, response: Response): Promise<Response>{
