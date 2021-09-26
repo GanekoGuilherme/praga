@@ -12,7 +12,8 @@ app.use(express.json());
 app.use(cors());
 app.use(routes);
 
-app.use((error: Error, request: Request, response: Response, next: NextFunction) => {        
+app.use((error: Error, request: Request, response: Response, next: NextFunction) => {   
+    console.log(error);
     HandleError.handleError({ error, request, response });
 })
 

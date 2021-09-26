@@ -4,15 +4,14 @@ import Plague from '../schemas/Plague';
 
 interface IRequestDTO {
     name: string;
-    photo: string;
     active: boolean;
     farmId: string;
 }
 
 class CreatePlaguelService {
 
-    public async execute({ name, photo, active, farmId } : IRequestDTO): Promise<any>{
-        const plague = await Plague.create({ _id: uuidv4(), name, photo, active, farmId});
+    public async execute({ name, active, farmId } : IRequestDTO): Promise<any>{
+        const plague = await Plague.create({ _id: uuidv4(), name, active, farmId});
         
         return plague;
     }
