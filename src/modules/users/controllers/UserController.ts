@@ -23,9 +23,9 @@ class UserController {
             await createUserCredentialService.execute({ password, email, userId: user._id, session });
             await session.commitTransaction();
             
-            const token = await authenticateUserService.execute({ email, password });
+            const { token } = await authenticateUserService.execute({ email, password });
                         
-            return response.status(200).json(token);
+            return response.status(200).json({ token, userId: user._id, name: user.name });
         } catch(error){
             await session.abortTransaction();
             return response.status(500).json({msg: 'Falha no cadastro do usuário.'});

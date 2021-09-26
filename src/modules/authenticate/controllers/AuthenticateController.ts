@@ -14,9 +14,9 @@ class AuthenticateController {
         
         const authenticateUserService = new AuthenticateUserService();
 
-        const token = await authenticateUserService.execute({ email, password });
+        const { token, user } = await authenticateUserService.execute({ email, password });
 
-        return response.status(200).json(token);
+        return response.status(200).json({ token, userId: user._id, name: user.name });
     }
 
     public async resetPassword(request: Request, response: Response): Promise<Response>{

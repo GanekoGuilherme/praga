@@ -1,3 +1,4 @@
+import User from '@modules/users/schemas/User';
 import UserCredential from '@modules/users/schemas/UserCredential';
 import AppError from '@shared/errors/AppError';
 import { compare } from 'bcryptjs';
@@ -11,17 +12,21 @@ interface IRequestDTO {
 class AuthenticateUserService {
 
     public async execute({ email, password } : IRequestDTO): Promise<any>{
-        const userAlreadyExists = await UserCredential.findOne({ email }).select('_id password');
-        if (!userAlreadyExists) throw new AppError('Usuário ou senha incorretos.', 400);
+        const userExists = await UserCredential.findOne({ email }).select('_id userId password');
+        if (!userExists) throw new AppError('Usuário ou senha incorretos3.', 400);
 
-        const passwordMatch = await compare(password, userAlreadyExists.password);
+        const passwordMatch = await compare(password, userExists.password);
 
-        if(!passwordMatch) throw new AppError('Usuário ou senha incorretos.', 400);
+        if (!passwordMatch) throw new AppError('Usuário ou senha incorretos2.', 400);
 
         const generateTokenProvider = new GenerateTokenProvider();
-        const token = await generateTokenProvider.execute(userAlreadyExists._id);
+        const token = await generateTokenProvider.execute(userExists._id);
 
-        return { token };
+        const user = await User.findOne({ _id: userExists.userId });
+        
+        if (!user) throw new AppError('Usuário ou senha incorretos1.', 400);
+        
+        return { token, user };
     }
 }
 
