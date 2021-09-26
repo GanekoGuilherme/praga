@@ -1,3 +1,4 @@
+import { ensureAuthenticate } from "@shared/middlewares/EnsureAuthenticate";
 import { Router } from "express";
 import PlagueController from "../controllers/PlagueController";
 
@@ -5,17 +6,18 @@ const plagueController = new PlagueController();
 
 const plagueRouter = Router();
 
-plagueRouter.post('/register', plagueController.store);
+plagueRouter.post('/register', ensureAuthenticate, plagueController.store);
 
 plagueRouter.get('/list', plagueController.list);
 
-plagueRouter.post('/list', plagueController.listWithFilter);
+plagueRouter.post('/list', ensureAuthenticate, plagueController.listWithFilter);
 
-plagueRouter.get('/list/:state', plagueController.listByState);
+plagueRouter.get('/list/:state', ensureAuthenticate, plagueController.listByState);
 
-plagueRouter.post('/list/:state', plagueController.listByStateWithFilter);
+plagueRouter.post('/list/:state', ensureAuthenticate, plagueController.listByStateWithFilter);
 
-plagueRouter.put('/update/:plagueId', plagueController.update);
-plagueRouter.get('/notification/:userId', plagueController.getNotification);
+plagueRouter.put('/update/:plagueId', ensureAuthenticate, plagueController.update);
+
+plagueRouter.get('/notification/:userId', ensureAuthenticate, plagueController.getNotification);
 
 export default plagueRouter;
