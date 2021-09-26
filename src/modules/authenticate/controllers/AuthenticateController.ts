@@ -3,7 +3,8 @@ import { Request, Response } from 'express';
 import AuthenticateUserService from '../services/AuhenticateUserService';
 import UserCredential from '@modules/users/schemas/UserCredential';
 import User from '@modules/users/schemas/User';
-import ResetPasswordService from '../services/ResetPasswordService';
+import CreatePasswordTokenService from '../services/CreatePasswordTokenService';
+import RegisterPasswordService from '../services/RegisterPasswordService';
 
 
 class AuthenticateController {
@@ -23,18 +24,28 @@ class AuthenticateController {
         const{email} = request.body;
         
         const userId = await UserCredential.findOne({email}).select('userId ');
-        
-        const name = await User.findOne({userId}).select('name')
-        
+        console.log(userId)
+        const name = await User.findOne({_id:userId.userId}).select('name')
+        console.log(name)
         const provider = new MaijetEmailProvider();
         
-        const resetPasswordService = new ResetPasswordService(); 
+        const createPasswordTokenService = new CreatePasswordTokenService(); 
 
-        const token = await resetPasswordService.execute({userCredentialsId:userId._id});
+        const token = await createPasswordTokenService.execute({userCredentialsId:userId._id});
         
         await provider.sendEmail(email, name, token);
         
         return response.status(200).json({ message: 'E-mail de recuperação de senha enviado com sucesso.' });
+    }
+
+    public async registerPassword(request: Request, response: Response): Promise<Response> {
+        const {password} = request.body;
+        const {tokenURL} = request.params;
+        
+        const registerPasswordService = new RegisterPasswordService();
+        const email = await registerPasswordService.execute({tokenURL, password}); 
+
+        return response.status(200).json(email);
     }
 }
 

@@ -3,7 +3,7 @@ import mailjet from 'node-mailjet';
 class MaijetEmailProvider {
     public async sendEmail(email, name, token): Promise<void>{
         const conection = mailjet.connect('89eef36534b630648d7ac440e9b587d2', 'c3691c1abaca2e3d5b43df5a1917cd1f')
-        console.log(email)
+        console.log(name.name)
         const request = conection.post("send", {'version': 'v3.1'})
             .request({
               "Messages":[

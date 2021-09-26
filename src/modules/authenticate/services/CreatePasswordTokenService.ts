@@ -5,7 +5,7 @@ interface IRequestDTO {
   userCredentialsId: string;
 }
 
-class ResetPasswordService {
+class CreatePasswordTokenService {
 
   public async execute({userCredentialsId} : IRequestDTO): Promise<any>{
     const token = crypto.randomBytes(20).toString('hex');
@@ -26,4 +26,4 @@ class ResetPasswordService {
   }
 }
 
-export default ResetPasswordService;
+export default CreatePasswordTokenService;
