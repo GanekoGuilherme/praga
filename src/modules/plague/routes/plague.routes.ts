@@ -16,5 +16,6 @@ plagueRouter.get('/list/:state', plagueController.listByState);
 plagueRouter.post('/list/:state', plagueController.listByStateWithFilter);
 
 plagueRouter.put('/update/:plagueId', plagueController.update);
+plagueRouter.get('/notification/:userId', plagueController.getNotification);
 
 export default plagueRouter;
