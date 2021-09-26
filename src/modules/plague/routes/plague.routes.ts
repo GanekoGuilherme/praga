@@ -1,12 +1,16 @@
 import { ensureAuthenticate } from "@shared/middlewares/EnsureAuthenticate";
 import { Router } from "express";
+import multer from 'multer';
+
+import uploadConfig from '@config/upload';
 import PlagueController from "../controllers/PlagueController";
 
 const plagueController = new PlagueController();
 
 const plagueRouter = Router();
+const upload = multer(uploadConfig);
 
-plagueRouter.post('/register', ensureAuthenticate, plagueController.store);
+plagueRouter.post('/register', ensureAuthenticate, upload.array('images'), plagueController.store);
 
 plagueRouter.get('/list', plagueController.list);
 

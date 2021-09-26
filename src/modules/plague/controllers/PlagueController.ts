@@ -7,15 +7,25 @@ import ListPlagueStateWithFilterService from '../services/ListPlagueStateWithFil
 import ListPlagueWithFilterService from '../services/ListPlagueWithFilterService';
 import UpdatePlagueService from '../services/UpdatePlagueService';
 import ListPlagueNotificationService from '../services/ListPlagueNotificationService';
+import SavePlagueImagesService from '../services/SavePlagueImagesService';
 
 class PlagueController {
 
     public async store(request: Request, response: Response): Promise<Response> {
-        const {name, photo, active, farmId} = request.body;
+        const {name, active, farmId} = request.body;
+        const requestImages = request.files as Express.Multer.File[];
+        
+        const images = requestImages?.map(image=>{
+            return { path: image.filename }
+        });
         
         const createPlagueService = new CreatePlagueService();
 
-        const plague = await createPlagueService.execute({ name, photo, active, farmId});
+        const plague = await createPlagueService.execute({ name, active, farmId});
+
+        const savePlagueImagesService = new SavePlagueImagesService();
+
+        await savePlagueImagesService.execute({ images, plagueId: plague._id});
         
         const createPlagueNotificationService = new CreatePlagueNotificationlService();
 

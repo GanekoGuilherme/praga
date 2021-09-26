@@ -1,5 +1,6 @@
 import Farm from '@modules/farm/schemas/Farm';
 import Plague from '../schemas/Plague';
+import PlagueImages from '../schemas/PlagueImages';
 
 interface IRequestDTO {
   state: string;
@@ -24,7 +25,27 @@ class ListPlagueStateWithFilterService {
         return resp;
       });
 
-      return plagueListWithPosition;
+      const plagueAndPhotoList = [];
+
+      for (let index = 0; index < plagueListWithPosition?.length; index += 1){
+        const photo = await PlagueImages.find({ plagueId: plagueListWithPosition[index]._id });
+        const item = {
+            _id: plagueListWithPosition[index]._id,
+            name: plagueListWithPosition[index].name,
+            active: plagueListWithPosition[index].active,
+            farmId: {
+                position: {
+                  lat: plagueListWithPosition[index].farm?.position.lat,
+                  long: plagueListWithPosition[index].farm?.position.long,
+                  radius: plagueListWithPosition[index].farm?.position.radius,
+                }
+            },
+            photo: photo?.map((img) => `https://praga-production.up.railway.app/uploads/${img.path}`,),
+        }
+        plagueAndPhotoList.push(item);
+      }
+
+      return plagueAndPhotoList;
     }
 }
 
