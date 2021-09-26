@@ -24,6 +24,8 @@ plagueRouter.put('/update/:plagueId', ensureAuthenticate, plagueController.updat
 
 plagueRouter.get('/notification/:userId', ensureAuthenticate, plagueController.getNotification);
 
+plagueRouter.get('/frontList', plagueController.frontList);
+
 plagueRouter.delete('/notification/:notificationId', ensureAuthenticate, plagueController.deleteNotification);
 
 plagueRouter.get('/listPlagues', plagueController.listPlagues);

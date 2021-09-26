@@ -8,6 +8,7 @@ import ListPlagueWithFilterService from '../services/ListPlagueWithFilterService
 import UpdatePlagueService from '../services/UpdatePlagueService';
 import ListPlagueNotificationService from '../services/ListPlagueNotificationService';
 import SavePlagueImagesService from '../services/SavePlagueImagesService';
+import FrontListService from '../services/FronListService';
 import ListPlagueNameService from '../services/ListPlagueNameService';
 import DeletePlagueNotificationService from '../services/DeletePlagueNotificationService';
 
@@ -99,6 +100,13 @@ class PlagueController {
         return response.status(200).json({items: listPlagueNotification});
     }
 
+    public async frontList(request: Request, response: Response): Promise<Response>{
+        const frontListService = new FrontListService();
+
+        const frontListPlague = await frontListService.execute();
+
+        return response.status(200).json({items: frontListPlague});
+    }
     public async deleteNotification(request: Request, response: Response): Promise<Response> {
         const {notificationId} = request.params;
 
