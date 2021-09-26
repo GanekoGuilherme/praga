@@ -8,6 +8,7 @@ import ListPlagueWithFilterService from '../services/ListPlagueWithFilterService
 import UpdatePlagueService from '../services/UpdatePlagueService';
 import ListPlagueNotificationService from '../services/ListPlagueNotificationService';
 import SavePlagueImagesService from '../services/SavePlagueImagesService';
+import ListPlagueNameService from '../services/ListPlagueNameService';
 
 class PlagueController {
 
@@ -95,6 +96,14 @@ class PlagueController {
         const listPlagueNotification = await listPlagueNotificationService.execute({userId});
 
         return response.status(200).json({items: listPlagueNotification});
+    }
+
+    public async listPlagues(request: Request, response: Response): Promise<Response>{
+        const listPlagueNameService = new ListPlagueNameService();
+
+        const listPlagueName = await listPlagueNameService.execute();
+
+        return response.status(200).json(listPlagueName);
     }
 }
 
