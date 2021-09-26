@@ -13,6 +13,16 @@ class FrontListService {
         let type = listWithoutRepeatName.length
         //criar uma forma de retornar a porcentagem
         console.log(listWithOlnyName)
+        const arroz = [];
+        listWithOlnyName.map(
+          (
+            item
+          ) => {
+            arroz.find((a) => a.name === item);
+            arroz.push();
+          }
+        )
+
         var counts = {};
         for (var i = 0; i < listWithOlnyName.length; i++)
           counts[listWithOlnyName[i]] = (counts[listWithOlnyName[i]] + 1) || 1;
