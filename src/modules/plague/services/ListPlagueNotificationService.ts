@@ -6,8 +6,7 @@ import PlagueNotification from '../schemas/PlagueNotification';
 class ListPlagueNotificationService {
 
     public async execute(userId): Promise<any>{
-      //consultar uma lista de notificações de acordo com o userid
-      const plagueNotificationList = await PlagueNotification.find(userId);
+      const plagueNotificationList = await PlagueNotification.find(userId).sort({createdAt: -1});
       return plagueNotificationList;
     }
 }
