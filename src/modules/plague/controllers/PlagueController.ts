@@ -11,6 +11,7 @@ import SavePlagueImagesService from '../services/SavePlagueImagesService';
 import FrontListService from '../services/FronListService';
 import ListPlagueNameService from '../services/ListPlagueNameService';
 import DeletePlagueNotificationService from '../services/DeletePlagueNotificationService';
+import FrontListStateService from '../services/FronListStateService';
 
 class PlagueController {
 
@@ -107,6 +108,16 @@ class PlagueController {
 
         return response.status(200).json({items: frontListPlague});
     }
+
+    public async frontListState(request: Request, response: Response): Promise<Response>{
+        const { state } = request.params;
+        const frontListStateService = new FrontListStateService();
+
+        const frontListStatePlague = await frontListStateService.execute({state});
+
+        return response.status(200).json({items: frontListStatePlague});
+    }
+
     public async deleteNotification(request: Request, response: Response): Promise<Response> {
         const {notificationId} = request.params;
 
