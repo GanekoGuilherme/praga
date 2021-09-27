@@ -12,6 +12,7 @@ import FrontListService from '../services/FronListService';
 import ListPlagueNameService from '../services/ListPlagueNameService';
 import DeletePlagueNotificationService from '../services/DeletePlagueNotificationService';
 import FrontListStateService from '../services/FronListStateService';
+import { v4 as uuidv4 } from 'uuid';
 
 class PlagueController {
 
@@ -20,7 +21,7 @@ class PlagueController {
         const requestImages = request.files as Express.Multer.File[];
         
         const images = requestImages?.map(image=>{
-            return { path: image.filename }
+            return { path: uuidv4() }
         });
         
         const createPlagueService = new CreatePlagueService();
